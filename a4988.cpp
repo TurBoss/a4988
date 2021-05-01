@@ -12,12 +12,20 @@ a4988::a4988()
 
 void a4988::init()
 {
-    wiringPiSetup();
-    pinMode(pinEnable,OUTPUT);
-    pinMode(pinstep,OUTPUT);
-    pinMode(pinDir,OUTPUT);
+    stdio_init_all();
+
+
+    gpio_init(pinEnable);
+    gpio_init(pinstep);
+    gpio_init(pinDir);
+
+    gpio_set_dir(pinEnable, GPIO_OUT);
+    gpio_set_dir(pinstep, GPIO_OUT);
+    gpio_set_dir(pinDir, GPIO_OUT);
 
     digitalWrite(pinEnable,LOW);
+
+    // gpio_set_outover(PINNAME, GPIO_OVERRIDE_INVERT);
 
 
 }
@@ -25,28 +33,28 @@ void a4988::init()
 void a4988::PasX(int pas, int direction)
 {
    if(direction == 1){
-       digitalWrite(pinDir,HIGH);
+       gpio_put(pinDir, 1);
 int i = 0;
     for(i=0; i<pas; i++){
 
         if(stopX1 == 1){pas=0;}  //end stop
-        digitalWrite(pinstep,HIGH);
+        gpio_put(pinstep, 1);
         delay(1);
-        digitalWrite(pinstep,LOW);
+        gpio_put(pinstep, 0);
         delay(1);
 
     }
    }
 
    if(direction == 0){
-       digitalWrite(pinDir,LOW);
+	   gpio_put(pinDir, 0);
 
 int i = 0;
     for(i=0; i<pas; i++){
         if(stopX2 == 1){pas=0;}  //end stop
-        digitalWrite(pinstep,HIGH);
+        gpio_put(pinstep, 1);
         delay(1);
-        digitalWrite(pinstep,LOW);
+        gpio_put(pinstep, 1);
         delay(1);
     }
    }

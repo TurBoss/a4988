@@ -1,6 +1,7 @@
 #ifndef A4988_H
 #define A4988_H
-#include "wiringPi.h"
+
+#include "hardware/gpio.h"
 
 #define pinEnable 21    // Active on gpio pin 5 motor X "Pin 29  Gpio 5" RPI2
 #define pinstep   22      // pin de Pas   Motor X
